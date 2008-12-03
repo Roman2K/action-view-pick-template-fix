@@ -3,7 +3,7 @@ ActionView::Base.class_eval do
     raise "patch not applicable to the current version of ActionView"
   end
 
-  def _unmemoized__pick_template_with_fix(template_path)
+  def _unmemoized__pick_template(template_path)
     # Look in last template's directory first
     directories = _render_stack.map { |template| template.base_path if template.respond_to? :base_path }.compact.uniq
     directories.reverse_each do |directory|
@@ -21,7 +21,6 @@ ActionView::Base.class_eval do
     # Fallback to uncached lookup
     _build_uncached_template(template_path)
   end
-  alias_method :_unmemoized__pick_template, :_unmemoized__pick_template_with_fix
   
 private
 
