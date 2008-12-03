@@ -7,12 +7,12 @@ ActionView::Base.class_eval do
     # Look in last template's directory first
     directories = _render_stack.map { |template| template.base_path if template.respond_to? :base_path }.compact.uniq
     directories.reverse_each do |directory|
-      parents = template_path.split('/')
-      filename = parents.pop
+      nesting = template_path.split('/')
+      filename = nesting.pop
       begin
-        path = [directory].concat(parents).push(filename).join('/')
+        path = [directory].concat(nesting).push(filename).join('/')
         template = _search_for_template_by_path(path) and return template
-      end while parents.shift
+      end while nesting.shift
     end
     
     # Search using the exact provided path
