@@ -4,6 +4,8 @@ ActionView::Base.class_eval do
   end
 
   def _unmemoized__pick_template(template_path)
+    return template_path if template_path.kind_of? ActionView::Template
+    
     # Look in last template's directory first
     directories = _render_stack.map { |template| template.base_path if template.respond_to? :base_path }.compact.uniq
     directories.reverse_each do |directory|
